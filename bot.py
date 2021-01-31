@@ -99,7 +99,7 @@ def main():
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("differences", differences_command))
+    dispatcher.add_handler(CommandHandler("temperatures", temperatures_command))
 
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
