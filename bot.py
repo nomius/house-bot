@@ -29,7 +29,7 @@ class Temperatures(object):
 
     def get_tuya_token(self, get_new=False):
         if self.current_token == "" or get_new:
-            auth_response = requests.post((self.TUYACLOUDURL + "/homeassistant/auth.do").format(config.TUYA_REGION),
+            auth_response = requests.post((self.TUYACLOUDURL + "/homeassistant/auth.do").format(config.TUYA_API_REGION),
                 data = {
                     "userName": config.TUYA_USERNAME,
                     "password": config.TUYA_PASSWORD,
@@ -52,10 +52,10 @@ class Temperatures(object):
         payload = { "accessToken": token }
         data = { "header": header, "payload": payload }
         try:
-            discovery_response = requests.post((self.TUYACLOUDURL + "/homeassistant/skill").format(config.TUYA_REGION), json=data)
+            discovery_response = requests.post((self.TUYACLOUDURL + "/homeassistant/skill").format(config.TUYA_API_REGION), json=data)
         except:
             token = self.get_tuya_token(get_new=True)
-            discovery_response = requests.post((self.TUYACLOUDURL + "/homeassistant/skill").format(config.TUYA_REGION), json=data)
+            discovery_response = requests.post((self.TUYACLOUDURL + "/homeassistant/skill").format(config.TUYA_API_REGION), json=data)
         discovery_response = discovery_response.json()
         return { "current_temperature" : float(discovery_response['payload']['devices'][0]['data']['current_temperature'])/10, "winter_heating_temperature" : float(discovery_response['payload']['devices'][0]['data']['temperature'])/10}
 
@@ -101,7 +101,7 @@ def main():
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("temperatures", temperatures_command))
 
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+    #dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
     updater.start_polling()
 
