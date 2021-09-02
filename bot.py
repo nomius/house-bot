@@ -76,7 +76,7 @@ class Temperatures(object):
 temperatures = Temperatures()
 
 def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text('Hi, I\'m DaveC bot.')
+    update.message.reply_text('Hi, I\'m DaveC's bot.')
 
 def temperatures_command(update: Update, context: CallbackContext) -> None:
     t_up = temperatures.get_current_upper_floor_temperature()
