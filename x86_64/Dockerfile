@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 FROM python:alpine
 RUN apk add openssl
-COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
+COPY --from=builder `python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])'` `python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])'`
 WORKDIR /app
 COPY bot.py config.py ./
 RUN chmod 0755 bot.py
